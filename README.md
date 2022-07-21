@@ -2,9 +2,9 @@
 
 ecommerce-api-spring
 
-documentation: <>
+documentation: <https://documenter.getpostman.com/view/3827865/UzR1JhYe>
 
-api url: <>
+api url: <https://ecommerce-api-spring-v1.herokuapp.com/>
 
 ## Requirement
 

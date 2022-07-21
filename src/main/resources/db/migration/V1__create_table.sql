@@ -1,5 +1,5 @@
 CREATE TABLE "users" (
-    "id" int8 PRIMARY KEY,
+    "id" serial PRIMARY KEY,
     "email" VARCHAR,
     "password" VARCHAR,
     "created_at" TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
@@ -7,7 +7,7 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "shops" (
-    "id" int8 PRIMARY KEY,
+    "id" serial PRIMARY KEY,
     "name" VARCHAR,
     "address" VARCHAR,
     "created_at" TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
@@ -15,7 +15,7 @@ CREATE TABLE "shops" (
 );
 
 CREATE TABLE "books" (
-    "id" int8 PRIMARY KEY,
+    "id" serial PRIMARY KEY,
     "name" VARCHAR,
     "author" VARCHAR,
     "price" float8,
@@ -27,7 +27,7 @@ CREATE TABLE "books" (
 );
 
 CREATE TABLE "orders" (
-    "id" int8 PRIMARY KEY,
+    "id" serial PRIMARY KEY,
     "created_at" TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
     "order_detail" VARCHAR,

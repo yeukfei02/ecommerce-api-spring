@@ -1,6 +1,7 @@
 package com.donaldwu.ecommerceapispring.controller
 
 import com.donaldwu.ecommerceapispring.entity.UserEntity
+import com.donaldwu.ecommerceapispring.helper.Helper
 import com.donaldwu.ecommerceapispring.requestBody.ChangePasswordRequestBody
 import com.donaldwu.ecommerceapispring.requestBody.LoginRequestBody
 import com.donaldwu.ecommerceapispring.requestBody.SignupRequestBody
@@ -41,7 +42,9 @@ class UserController(private val userService: UserService) {
             val isPasswordValid = Bcrypt.verify(loginRequestBody.password, user.password.toByteArray())
             if (isPasswordValid) {
                 loginResponseBody.message = "login success"
-                loginResponseBody.token = ""
+
+                val token = Helper.getJwtToken(user.id, user.email)
+                loginResponseBody.token = token
             } else {
                 loginResponseBody.message = "login fail, wrong password"
             }

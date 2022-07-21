@@ -18,11 +18,11 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/signup"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun signup(@RequestBody signupRequestBody: SignupRequestBody): SignupResponseBody {
+    fun signup(@RequestBody signupRequestBody: SignupRequestBody, userEntity: UserEntity): SignupResponseBody {
         if (signupRequestBody.email.isNotEmpty() && signupRequestBody.password.isNotEmpty()) {
             val hashPassword = Bcrypt.hash(signupRequestBody.password, 10)
             val hashPasswordStr = String(hashPassword)
-            userService.signup(signupRequestBody.email, hashPasswordStr)
+            userService.signup(userEntity, signupRequestBody.email, hashPasswordStr)
         }
 
         val signupResponseBody = SignupResponseBody()

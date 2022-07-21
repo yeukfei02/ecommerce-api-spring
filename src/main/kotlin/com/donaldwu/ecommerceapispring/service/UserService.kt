@@ -25,4 +25,9 @@ class UserService(private val userRepository: UserRepository) {
     fun getUserByEmail(email: String): UserEntity {
         return userRepository.findByEmail(email)
     }
+
+    fun changePassword(userEntity: UserEntity, newPassword: String) {
+        userEntity.password = newPassword
+        userRepository.save(userEntity)
+    }
 }

@@ -6,5 +6,5 @@ import lombok.Data
 @Data
 class GetUsersResponseBody {
     var message: String = ""
-    var users: MutableList<UserEntity> = mutableListOf()
+    var users: MutableIterable<UserEntity> = mutableListOf()
 }

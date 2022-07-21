@@ -13,7 +13,7 @@ class UserService(private val userRepository: UserRepository) {
         userRepository.save(userEntity)
     }
 
-    fun getUsers(): MutableList<UserEntity> {
+    fun getUsers(): MutableIterable<UserEntity> {
         return userRepository.findAll()
     }
 

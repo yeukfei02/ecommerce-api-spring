@@ -17,7 +17,7 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findAll()
     }
 
-    fun getUserById(id: Int): Optional<UserEntity> {
+    fun getUserById(id: Long): Optional<UserEntity> {
         return userRepository.findById(id)
     }
 

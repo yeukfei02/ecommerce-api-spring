@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException
 
 class Helper {
     companion object {
-        fun getJwtToken(id: Int, email: String): String {
+        fun getJwtToken(id: Long, email: String): String {
             var token = ""
 
             try {

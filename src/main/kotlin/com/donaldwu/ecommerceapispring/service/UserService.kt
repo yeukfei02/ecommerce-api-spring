@@ -7,8 +7,7 @@ import java.util.*
 
 @Service
 class UserService(private val userRepository: UserRepository) {
-    fun signup(email: String, password: String) {
-        val userEntity = UserEntity()
+    fun signup(userEntity: UserEntity, email: String, password: String) {
         userEntity.email = email
         userEntity.password = password
         userRepository.save(userEntity)

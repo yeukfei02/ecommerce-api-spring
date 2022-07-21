@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "users")
 @Data
@@ -19,6 +20,12 @@ class UserEntity {
 
     @Column(name = "password", nullable = false)
     var password: String = ""
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var books: List<BookEntity> = mutableListOf()
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var orders: List<OrderEntity> = mutableListOf()
 
     @Column(name = "created_at")
     @CreationTimestamp

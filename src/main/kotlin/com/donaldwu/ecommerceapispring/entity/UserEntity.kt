@@ -12,8 +12,7 @@ import javax.persistence.*
 class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
-    var id: Int = 0
+    var id: Long = 0
 
     @Column(name = "email", nullable = false)
     var email: String = ""

@@ -69,7 +69,7 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/{id}"], method = [RequestMethod.GET])
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    fun getUserById(@PathVariable("id") id: Int): GetUserByIdResponseBody {
+    fun getUserById(@PathVariable("id") id: Long): GetUserByIdResponseBody {
         val user = userService.getUserById(id)
 
         var userResult: UserEntity? = null
@@ -87,7 +87,7 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/change-password/{id}"], method = [RequestMethod.PUT])
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    fun changePassword(@PathVariable("id") id: Int, @RequestBody changePasswordRequestBody: ChangePasswordRequestBody): ChangePasswordResponseBody {
+    fun changePassword(@PathVariable("id") id: Long, @RequestBody changePasswordRequestBody: ChangePasswordRequestBody): ChangePasswordResponseBody {
         val changePasswordResponseBody = ChangePasswordResponseBody()
 
         val userEntity = userService.getUserById(id)

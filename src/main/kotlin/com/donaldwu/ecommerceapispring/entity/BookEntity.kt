@@ -1,10 +1,12 @@
 package com.donaldwu.ecommerceapispring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.Data
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 import javax.persistence.*
+
 
 @Entity
 @Table(name = "books")
@@ -31,6 +33,16 @@ class BookEntity {
 
     @Column(name = "user_id", nullable = true)
     var user_id: Long? = 0
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "shop_id", insertable = false, updatable = false)
+    @JsonIgnore
+    var shop: ShopEntity? = null
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
+    var user: UserEntity? = null
 
     @Column(name = "created_at")
     @CreationTimestamp

@@ -20,6 +20,9 @@ class ShopEntity {
     @Column(name = "address", nullable = true)
     var address: String? = ""
 
+    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var books: List<BookEntity> = mutableListOf()
+
     @Column(name = "created_at")
     @CreationTimestamp
     var created_at: LocalDateTime = LocalDateTime.now()

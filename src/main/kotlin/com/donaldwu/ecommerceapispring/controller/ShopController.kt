@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
-@RequestMapping(value= ["/api"])
+@RequestMapping(value = ["/api"])
 class ShopController(private val shopService: ShopService) {
     @RequestMapping(value = ["/shops"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,7 +30,7 @@ class ShopController(private val shopService: ShopService) {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     fun getShops(): GetShopsResponseBody {
-       val shops = shopService.getShops()
+        val shops = shopService.getShops()
 
         val getShopsResponseBody = GetShopsResponseBody()
         getShopsResponseBody.message = "getShops"

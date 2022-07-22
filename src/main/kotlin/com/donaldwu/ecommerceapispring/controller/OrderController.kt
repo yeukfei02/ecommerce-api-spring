@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
-@RequestMapping(value= ["/api"])
+@RequestMapping(value = ["/api"])
 class OrderController(private val orderService: OrderService) {
     @RequestMapping(value = ["/orders"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
@@ -19,7 +19,8 @@ class OrderController(private val orderService: OrderService) {
     fun createOrder(@RequestBody createOrderRequestBody: CreateOrderRequestBody, orderEntity: OrderEntity): CreateOrderResponseBody {
         if (createOrderRequestBody.order_detail.isNotEmpty() &&
             createOrderRequestBody.shop_id > 0 &&
-            createOrderRequestBody.user_id > 0) {
+            createOrderRequestBody.user_id > 0
+        ) {
             orderService.createOrder(
                 orderEntity,
                 createOrderRequestBody.order_detail,

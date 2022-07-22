@@ -13,6 +13,30 @@ group = "com.donaldwu"
 version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+val ktlint by configurations.creating
+val outputDir = "${project.buildDir}/reports/ktlint/"
+val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
+
+val ktlintCheck by tasks.creating(JavaExec::class) {
+	inputs.files(inputFiles)
+	outputs.dir(outputDir)
+
+	description = "Check Kotlin code style."
+	classpath = ktlint
+	mainClass.set("com.pinterest.ktlint.Main")
+	args = listOf("src/**/*.kt")
+}
+
+val ktlintFormat by tasks.creating(JavaExec::class) {
+	inputs.files(inputFiles)
+	outputs.dir(outputDir)
+
+	description = "Fix Kotlin code style deviations."
+	classpath = ktlint
+	mainClass.set("com.pinterest.ktlint.Main")
+	args = listOf("-F", "src/**/*.kt")
+}
+
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
@@ -35,6 +59,11 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
+	ktlint("com.pinterest:ktlint:0.46.1") {
+		attributes {
+			attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+		}
+	}
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
-@RequestMapping(value= ["/api"])
+@RequestMapping(value = ["/api"])
 class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/signup"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)

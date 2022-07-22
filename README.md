@@ -13,6 +13,9 @@ api url: <https://ecommerce-api-spring-v1.herokuapp.com/>
 ## Testing and run
 
 ```zsh
+// show gradle all tasks
+$ ./gradlew tasks --all
+
 // build jar
 $ ./gradlew build
 
@@ -27,6 +30,12 @@ $ ./gradlew flywayInfo
 
 // db migrate
 $ ./gradlew flywayMigrate
+
+// check code style
+$ ./gradlew ktlintCheck
+
+// format code
+$ ./gradlew ktlintFormat
 
 // run test case
 $ ./gradlew test

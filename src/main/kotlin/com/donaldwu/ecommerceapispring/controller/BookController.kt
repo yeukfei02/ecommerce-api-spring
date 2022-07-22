@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
-@RequestMapping(value= ["/api"])
+@RequestMapping(value = ["/api"])
 class BookController(private val bookService: BookService) {
     @RequestMapping(value = ["/books"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
@@ -21,7 +21,8 @@ class BookController(private val bookService: BookService) {
             createBookRequestBody.price > 0 &&
             createBookRequestBody.quantity > 0 &&
             createBookRequestBody.shop_id > 0 &&
-            createBookRequestBody.user_id > 0) {
+            createBookRequestBody.user_id > 0
+        ) {
             bookService.createBook(
                 bookEntity,
                 createBookRequestBody.name,

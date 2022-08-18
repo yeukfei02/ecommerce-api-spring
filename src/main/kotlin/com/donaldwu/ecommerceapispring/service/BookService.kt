@@ -1,42 +1,42 @@
 package com.donaldwu.ecommerceapispring.service
 
-import com.donaldwu.ecommerceapispring.entity.BookEntity
+import com.donaldwu.ecommerceapispring.model.Book
 import com.donaldwu.ecommerceapispring.repository.BookRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class BookService(private val bookRepository: BookRepository) {
-    fun createBook(bookEntity: BookEntity, name: String, author: String, price: Double, quantity: Int, shop_id: Long, user_id: Long) {
-        bookEntity.name = name
-        bookEntity.author = author
-        bookEntity.price = price
-        bookEntity.quantity = quantity
-        bookEntity.shop_id = shop_id
-        bookEntity.user_id = user_id
-        bookRepository.save(bookEntity)
+    fun createBook(book: Book, name: String, author: String, price: Double, quantity: Int, shop_id: Long, user_id: Long) {
+        book.name = name
+        book.author = author
+        book.price = price
+        book.quantity = quantity
+        book.shop_id = shop_id
+        book.user_id = user_id
+        bookRepository.save(book)
     }
 
-    fun getBooks(): MutableIterable<BookEntity> {
+    fun getBooks(): MutableIterable<Book> {
         return bookRepository.findAll()
     }
 
-    fun getBookById(id: Long): Optional<BookEntity> {
+    fun getBookById(id: Long): Optional<Book> {
         return bookRepository.findById(id)
     }
 
-    fun updateBookById(bookEntity: BookEntity, name: String, author: String, price: Double, quantity: Int, shop_id: Long, user_id: Long) {
-        bookEntity.name = name
-        bookEntity.author = author
-        bookEntity.price = price
-        bookEntity.quantity = quantity
+    fun updateBookById(book: Book, name: String, author: String, price: Double, quantity: Int, shop_id: Long, user_id: Long) {
+        book.name = name
+        book.author = author
+        book.price = price
+        book.quantity = quantity
         if (shop_id > 0) {
-            bookEntity.shop_id = shop_id
+            book.shop_id = shop_id
         }
         if (user_id > 0) {
-            bookEntity.user_id = user_id
+            book.user_id = user_id
         }
-        bookRepository.save(bookEntity)
+        bookRepository.save(book)
     }
 
     fun deleteBookById(id: Long) {

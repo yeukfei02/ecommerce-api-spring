@@ -1,8 +1,8 @@
 package com.donaldwu.ecommerceapispring.controller
 
-import com.donaldwu.ecommerceapispring.entity.ShopEntity
-import com.donaldwu.ecommerceapispring.requestBody.CreateShopRequestBody
-import com.donaldwu.ecommerceapispring.requestBody.UpdateShopByIdRequestBody
+import com.donaldwu.ecommerceapispring.dto.CreateShopDto
+import com.donaldwu.ecommerceapispring.dto.UpdateShopByIdDto
+import com.donaldwu.ecommerceapispring.model.Shop
 import com.donaldwu.ecommerceapispring.responseBody.*
 import com.donaldwu.ecommerceapispring.service.ShopService
 import org.springframework.http.HttpStatus
@@ -15,9 +15,9 @@ class ShopController(private val shopService: ShopService) {
     @RequestMapping(value = ["/shops"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun createShop(@RequestBody createShopRequestBody: CreateShopRequestBody, shopEntity: ShopEntity): CreateShopResponseBody {
-        if (createShopRequestBody.name.isNotEmpty() && createShopRequestBody.address.isNotEmpty()) {
-            shopService.createShop(shopEntity, createShopRequestBody.name, createShopRequestBody.address)
+    fun createShop(@RequestBody createShopDto: CreateShopDto, shop: Shop): CreateShopResponseBody {
+        if (createShopDto.name.isNotEmpty() && createShopDto.address.isNotEmpty()) {
+            shopService.createShop(shop, createShopDto.name, createShopDto.address)
         }
 
         val createShopResponseBody = CreateShopResponseBody()
@@ -45,7 +45,7 @@ class ShopController(private val shopService: ShopService) {
     fun getShopById(@PathVariable("id") id: Long): GetShopByIdResponseBody {
         val shop = shopService.getShopById(id)
 
-        var shopResult: ShopEntity? = null
+        var shopResult: Shop? = null
         if (shop.isPresent) {
             shopResult = shop.get()
         }
@@ -60,14 +60,14 @@ class ShopController(private val shopService: ShopService) {
     @RequestMapping(value = ["/shops/{id}"], method = [RequestMethod.PUT])
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    fun updateShopById(@PathVariable("id") id: Long, @RequestBody updateShopByIdRequestBody: UpdateShopByIdRequestBody): UpdateShopByIdResponseBody {
+    fun updateShopById(@PathVariable("id") id: Long, @RequestBody updateShopByIdDto: UpdateShopByIdDto): UpdateShopByIdResponseBody {
         val updateShopByIdResponseBody = UpdateShopByIdResponseBody()
 
         val shopEntity = shopService.getShopById(id)
         if (shopEntity.isPresent) {
             val shop = shopEntity.get()
-            if (updateShopByIdRequestBody.name.isNotEmpty() && updateShopByIdRequestBody.address.isNotEmpty()) {
-                shopService.updateShopById(shop, updateShopByIdRequestBody.name, updateShopByIdRequestBody.address)
+            if (updateShopByIdDto.name.isNotEmpty() && updateShopByIdDto.address.isNotEmpty()) {
+                shopService.updateShopById(shop, updateShopByIdDto.name, updateShopByIdDto.address)
                 updateShopByIdResponseBody.message = "updateShopById success"
             }
         }

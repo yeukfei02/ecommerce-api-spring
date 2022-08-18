@@ -1,4 +1,4 @@
-package com.donaldwu.ecommerceapispring.entity
+package com.donaldwu.ecommerceapispring.model
 
 import lombok.Data
 import org.hibernate.annotations.CreationTimestamp
@@ -9,7 +9,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "shops")
 @Data
-class ShopEntity {
+class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
@@ -21,10 +21,10 @@ class ShopEntity {
     var address: String? = ""
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var books: List<BookEntity> = mutableListOf()
+    var books: List<Book> = mutableListOf()
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var orders: List<OrderEntity> = mutableListOf()
+    var orders: List<Order> = mutableListOf()
 
     @Column(name = "created_at")
     @CreationTimestamp

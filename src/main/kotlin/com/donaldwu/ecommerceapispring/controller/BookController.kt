@@ -1,8 +1,8 @@
 package com.donaldwu.ecommerceapispring.controller
 
-import com.donaldwu.ecommerceapispring.entity.BookEntity
-import com.donaldwu.ecommerceapispring.requestBody.CreateBookRequestBody
-import com.donaldwu.ecommerceapispring.requestBody.UpdateBookByIdRequestBody
+import com.donaldwu.ecommerceapispring.dto.CreateBookDto
+import com.donaldwu.ecommerceapispring.dto.UpdateBookByIdDto
+import com.donaldwu.ecommerceapispring.model.Book
 import com.donaldwu.ecommerceapispring.responseBody.*
 import com.donaldwu.ecommerceapispring.service.BookService
 import org.springframework.http.HttpStatus
@@ -15,22 +15,22 @@ class BookController(private val bookService: BookService) {
     @RequestMapping(value = ["/books"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun createBook(@RequestBody createBookRequestBody: CreateBookRequestBody, bookEntity: BookEntity): CreateBookResponseBody {
-        if (createBookRequestBody.name.isNotEmpty() &&
-            createBookRequestBody.author.isNotEmpty() &&
-            createBookRequestBody.price > 0 &&
-            createBookRequestBody.quantity > 0 &&
-            createBookRequestBody.shop_id > 0 &&
-            createBookRequestBody.user_id > 0
+    fun createBook(@RequestBody createBookDto: CreateBookDto, book: Book): CreateBookResponseBody {
+        if (createBookDto.name.isNotEmpty() &&
+            createBookDto.author.isNotEmpty() &&
+            createBookDto.price > 0 &&
+            createBookDto.quantity > 0 &&
+            createBookDto.shop_id > 0 &&
+            createBookDto.user_id > 0
         ) {
             bookService.createBook(
-                bookEntity,
-                createBookRequestBody.name,
-                createBookRequestBody.author,
-                createBookRequestBody.price,
-                createBookRequestBody.quantity,
-                createBookRequestBody.shop_id,
-                createBookRequestBody.user_id
+                book,
+                createBookDto.name,
+                createBookDto.author,
+                createBookDto.price,
+                createBookDto.quantity,
+                createBookDto.shop_id,
+                createBookDto.user_id
             )
         }
 
@@ -59,7 +59,7 @@ class BookController(private val bookService: BookService) {
     fun getBookById(@PathVariable("id") id: Long): GetBookByIdResponseBody {
         val book = bookService.getBookById(id)
 
-        var bookResult: BookEntity? = null
+        var bookResult: Book? = null
         if (book.isPresent) {
             bookResult = book.get()
         }
@@ -74,7 +74,7 @@ class BookController(private val bookService: BookService) {
     @RequestMapping(value = ["/books/{id}"], method = [RequestMethod.PUT])
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    fun updateBookById(@PathVariable("id") id: Long, @RequestBody updateBookByIdRequestBody: UpdateBookByIdRequestBody): UpdateBookByIdResponseBody {
+    fun updateBookById(@PathVariable("id") id: Long, @RequestBody updateBookByIdDto: UpdateBookByIdDto): UpdateBookByIdResponseBody {
         val updateBookByIdResponseBody = UpdateBookByIdResponseBody()
 
         val bookEntity = bookService.getBookById(id)
@@ -82,12 +82,12 @@ class BookController(private val bookService: BookService) {
             val book = bookEntity.get()
             bookService.updateBookById(
                 book,
-                updateBookByIdRequestBody.name,
-                updateBookByIdRequestBody.author,
-                updateBookByIdRequestBody.price,
-                updateBookByIdRequestBody.quantity,
-                updateBookByIdRequestBody.shop_id,
-                updateBookByIdRequestBody.user_id
+                updateBookByIdDto.name,
+                updateBookByIdDto.author,
+                updateBookByIdDto.price,
+                updateBookByIdDto.quantity,
+                updateBookByIdDto.shop_id,
+                updateBookByIdDto.user_id
             )
             updateBookByIdResponseBody.message = "updateBookById success"
         }

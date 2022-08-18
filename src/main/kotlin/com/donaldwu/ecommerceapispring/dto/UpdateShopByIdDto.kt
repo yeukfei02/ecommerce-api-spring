@@ -1,9 +1,9 @@
-package com.donaldwu.ecommerceapispring.requestBody
+package com.donaldwu.ecommerceapispring.dto
 
 import lombok.Data
 
 @Data
-class CreateShopRequestBody {
+class UpdateShopByIdDto {
     var name: String = ""
     var address: String = ""
 }

@@ -1,7 +1,7 @@
 package com.donaldwu.ecommerceapispring.controller
 
-import com.donaldwu.ecommerceapispring.entity.OrderEntity
-import com.donaldwu.ecommerceapispring.requestBody.CreateOrderRequestBody
+import com.donaldwu.ecommerceapispring.dto.CreateOrderDto
+import com.donaldwu.ecommerceapispring.model.Order
 import com.donaldwu.ecommerceapispring.responseBody.CreateOrderResponseBody
 import com.donaldwu.ecommerceapispring.responseBody.GetOrderByIdResponseBody
 import com.donaldwu.ecommerceapispring.responseBody.GetOrdersResponseBody
@@ -16,16 +16,16 @@ class OrderController(private val orderService: OrderService) {
     @RequestMapping(value = ["/orders"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun createOrder(@RequestBody createOrderRequestBody: CreateOrderRequestBody, orderEntity: OrderEntity): CreateOrderResponseBody {
-        if (createOrderRequestBody.order_detail.isNotEmpty() &&
-            createOrderRequestBody.shop_id > 0 &&
-            createOrderRequestBody.user_id > 0
+    fun createOrder(@RequestBody createOrderDto: CreateOrderDto, order: Order): CreateOrderResponseBody {
+        if (createOrderDto.order_detail.isNotEmpty() &&
+            createOrderDto.shop_id > 0 &&
+            createOrderDto.user_id > 0
         ) {
             orderService.createOrder(
-                orderEntity,
-                createOrderRequestBody.order_detail,
-                createOrderRequestBody.shop_id,
-                createOrderRequestBody.user_id
+                order,
+                createOrderDto.order_detail,
+                createOrderDto.shop_id,
+                createOrderDto.user_id
             )
         }
 
@@ -54,7 +54,7 @@ class OrderController(private val orderService: OrderService) {
     fun getOrderById(@PathVariable("id") id: Long): GetOrderByIdResponseBody {
         val order = orderService.getOrderById(id)
 
-        var orderResult: OrderEntity? = null
+        var orderResult: Order? = null
         if (order.isPresent) {
             orderResult = order.get()
         }

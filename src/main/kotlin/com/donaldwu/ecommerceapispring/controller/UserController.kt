@@ -1,10 +1,10 @@
 package com.donaldwu.ecommerceapispring.controller
 
-import com.donaldwu.ecommerceapispring.entity.UserEntity
+import com.donaldwu.ecommerceapispring.dto.ChangePasswordDto
+import com.donaldwu.ecommerceapispring.dto.LoginDto
+import com.donaldwu.ecommerceapispring.dto.SignupDto
 import com.donaldwu.ecommerceapispring.helper.Helper
-import com.donaldwu.ecommerceapispring.requestBody.ChangePasswordRequestBody
-import com.donaldwu.ecommerceapispring.requestBody.LoginRequestBody
-import com.donaldwu.ecommerceapispring.requestBody.SignupRequestBody
+import com.donaldwu.ecommerceapispring.model.User
 import com.donaldwu.ecommerceapispring.responseBody.*
 import com.donaldwu.ecommerceapispring.service.UserService
 import com.toxicbakery.bcrypt.Bcrypt
@@ -18,11 +18,11 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/signup"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun signup(@RequestBody signupRequestBody: SignupRequestBody, userEntity: UserEntity): SignupResponseBody {
-        if (signupRequestBody.email.isNotEmpty() && signupRequestBody.password.isNotEmpty()) {
-            val hashPassword = Bcrypt.hash(signupRequestBody.password, 10)
+    fun signup(@RequestBody signupDto: SignupDto, user: User): SignupResponseBody {
+        if (signupDto.email.isNotEmpty() && signupDto.password.isNotEmpty()) {
+            val hashPassword = Bcrypt.hash(signupDto.password, 10)
             val hashPasswordStr = String(hashPassword)
-            userService.signup(userEntity, signupRequestBody.email, hashPasswordStr)
+            userService.signup(user, signupDto.email, hashPasswordStr)
         }
 
         val signupResponseBody = SignupResponseBody()
@@ -34,12 +34,12 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/login"], method = [RequestMethod.POST])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun login(@RequestBody loginRequestBody: LoginRequestBody): LoginResponseBody {
+    fun login(@RequestBody loginDto: LoginDto): LoginResponseBody {
         val loginResponseBody = LoginResponseBody()
 
-        if (loginRequestBody.email.isNotEmpty() && loginRequestBody.password.isNotEmpty()) {
-            val user = userService.getUserByEmail(loginRequestBody.email)
-            val isPasswordValid = Bcrypt.verify(loginRequestBody.password, user.password.toByteArray())
+        if (loginDto.email.isNotEmpty() && loginDto.password.isNotEmpty()) {
+            val user = userService.getUserByEmail(loginDto.email)
+            val isPasswordValid = Bcrypt.verify(loginDto.password, user.password.toByteArray())
             if (isPasswordValid) {
                 loginResponseBody.message = "login success"
 
@@ -72,7 +72,7 @@ class UserController(private val userService: UserService) {
     fun getUserById(@PathVariable("id") id: Long): GetUserByIdResponseBody {
         val user = userService.getUserById(id)
 
-        var userResult: UserEntity? = null
+        var userResult: User? = null
         if (user.isPresent) {
             userResult = user.get()
         }
@@ -87,16 +87,16 @@ class UserController(private val userService: UserService) {
     @RequestMapping(value = ["/users/change-password/{id}"], method = [RequestMethod.PUT])
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    fun changePassword(@PathVariable("id") id: Long, @RequestBody changePasswordRequestBody: ChangePasswordRequestBody): ChangePasswordResponseBody {
+    fun changePassword(@PathVariable("id") id: Long, @RequestBody changePasswordDto: ChangePasswordDto): ChangePasswordResponseBody {
         val changePasswordResponseBody = ChangePasswordResponseBody()
 
         val userEntity = userService.getUserById(id)
         if (userEntity.isPresent) {
             val user = userEntity.get()
-            if (changePasswordRequestBody.old_password.isNotEmpty() && changePasswordRequestBody.new_password.isNotEmpty()) {
-                val isPasswordValid = Bcrypt.verify(changePasswordRequestBody.old_password, user.password.toByteArray())
+            if (changePasswordDto.old_password.isNotEmpty() && changePasswordDto.new_password.isNotEmpty()) {
+                val isPasswordValid = Bcrypt.verify(changePasswordDto.old_password, user.password.toByteArray())
                 if (isPasswordValid) {
-                    val hashPassword = Bcrypt.hash(changePasswordRequestBody.new_password, 10)
+                    val hashPassword = Bcrypt.hash(changePasswordDto.new_password, 10)
                     val hashPasswordStr = String(hashPassword)
 
                     userService.changePassword(user, hashPasswordStr)

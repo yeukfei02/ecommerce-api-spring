@@ -1,9 +1,9 @@
-package com.donaldwu.ecommerceapispring.requestBody
+package com.donaldwu.ecommerceapispring.dto
 
 import lombok.Data
 
 @Data
-class CreateBookRequestBody {
+class CreateBookDto {
     var name: String = ""
     var author: String = ""
     var price: Double = 0.0

@@ -1,10 +1,10 @@
 package com.donaldwu.ecommerceapispring.responseBody
 
-import com.donaldwu.ecommerceapispring.entity.BookEntity
+import com.donaldwu.ecommerceapispring.model.Book
 import lombok.Data
 
 @Data
 class GetBookByIdResponseBody {
     var message: String = ""
-    var book: BookEntity? = null
+    var book: Book? = null
 }

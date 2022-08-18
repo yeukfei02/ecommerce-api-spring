@@ -1,6 +1,6 @@
 package com.donaldwu.ecommerceapispring.repository
 
-import com.donaldwu.ecommerceapispring.entity.ShopEntity
+import com.donaldwu.ecommerceapispring.model.Shop
 import org.springframework.data.repository.CrudRepository
 
-interface ShopRepository : CrudRepository<ShopEntity, Long>
+interface ShopRepository : CrudRepository<Shop, Long>

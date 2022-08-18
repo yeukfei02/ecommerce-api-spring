@@ -1,9 +1,9 @@
-package com.donaldwu.ecommerceapispring.requestBody
+package com.donaldwu.ecommerceapispring.dto
 
 import lombok.Data
 
 @Data
-class SignupRequestBody {
+class LoginDto {
     var email: String = ""
     var password: String = ""
 }

@@ -1,4 +1,4 @@
-package com.donaldwu.ecommerceapispring.entity
+package com.donaldwu.ecommerceapispring.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.Data
@@ -8,15 +8,24 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "orders")
+@Table(name = "books")
 @Data
-class OrderEntity {
+class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    @Column(name = "order_detail", nullable = true)
-    var order_detail: String? = ""
+    @Column(name = "name", nullable = true)
+    var name: String? = ""
+
+    @Column(name = "author", nullable = true)
+    var author: String? = ""
+
+    @Column(name = "price", nullable = true)
+    var price: Double? = 0.0
+
+    @Column(name = "quantity", nullable = true)
+    var quantity: Int? = 0
 
     @Column(name = "shop_id", nullable = true)
     var shop_id: Long? = 0
@@ -27,12 +36,12 @@ class OrderEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "shop_id", insertable = false, updatable = false)
     @JsonIgnore
-    var shop: ShopEntity? = null
+    var shop: Shop? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonIgnore
-    var user: UserEntity? = null
+    var user: User? = null
 
     @Column(name = "created_at")
     @CreationTimestamp

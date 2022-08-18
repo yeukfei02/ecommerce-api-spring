@@ -1,9 +1,9 @@
-package com.donaldwu.ecommerceapispring.requestBody
+package com.donaldwu.ecommerceapispring.dto
 
 import lombok.Data
 
 @Data
-class ChangePasswordRequestBody {
+class ChangePasswordDto {
     var old_password: String = ""
     var new_password: String = ""
 }

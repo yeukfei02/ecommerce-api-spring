@@ -4,8 +4,6 @@ ecommerce-api-spring
 
 documentation: <https://documenter.getpostman.com/view/3827865/UzR1JhYe>
 
-api url: <https://ecommerce-api-spring-v1.herokuapp.com/>
-
 ## Requirement
 
 - install java (v11+)
